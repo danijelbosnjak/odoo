@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+      <!-- Ovah record se tice samo form viewa znaci ono kad kliknes na record -->
+        <record model="ir.ui.view" id="klijenti_form_view">
+            <field name="name">klijenti.form</field>
+            <field name="model">rentacar.klijenti</field>
+            <field name="arch" type="xml">
+                <form string="Klijent Form">
+                    <sheet>
+                      <group>
+                        <group string="Lijevi">
+                            <field name="name"/>
+                            <field name="lastname"/>
+                            <field name="address"/>
+                        </group>
+                        <group string="Desni">    
+                            <field name="city"/>
+                            <field name="country"/>
+                            <field name="birth_date"/>
+                            <field name="note"/>   
+                        </group>
+                      </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+        <record model="ir.actions.act_window" id="rentacar_list_action">
+            <field name="name">RentaCar Desni</field>
+            <field name="res_model">rentacar.klijenti</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Unesi klijenta</p>
+            </field>
+        </record>
+
+            <record id="rentacar_klijenti_form" model="ir.ui.view">
+              <field name="name">RentaCar klijenti: form</field>
+              <field name="model">rentacar.klijenti</field>
+              <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <label for="name"/> <field name="name"/>
+                    <label for="lastname"/>
+                    <field name="lastname"/>
+                    <label for="city"/>
+                    <field name="city"/>
+                  </sheet>
+                </form>
+              </field>
+            </record>
+
+        <!-- top level menu: no parent  Skroz gornji crni meni-->
+        <menuitem id="main_rentacar_menu" name="RentaCar Gornji"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="rentacar_menu" name="RentaCar Lijevi Meni"
+                  parent="main_rentacar_menu"/>
+        <!-- the following menuitem should appear *after*
+             its parent openacademy_menu and *after* its
+             action course_list_action -->
+        <menuitem id="klijenti_menu" name="Klijenti" parent="rentacar_menu"
+                  action="rentacar_list_action"/>
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+    </data>
+</openerp> 

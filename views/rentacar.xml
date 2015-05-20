@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+      <!-- Ovaj record se tice samo form viewa znaci ono kad kliknes na record pa ti pokaze formu -->
+        <record model="ir.ui.view" id="klijenti_form_view">
+            <field name="name">klijenti.form</field>
+            <field name="model">rentacar.klijenti</field>
+            <field name="arch" type="xml">
+                <form string="Klijent Form">
+                    <sheet>
+                      <group>
+                        <group string="Lijevi">
+                            <field name="name"/>
+                            <field name="lastname"/>
+                            <field name="address"/>
+                        </group>
+                        <group string="Desni">    
+                            <field name="city"/>
+                            <field name="country"/>
+                            <field name="birth_date"/>
+                            <field name="note"/>   
+                        </group>
+                      </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+            Tu govorimo o akcijama nije mi bas jasno treba prouciti. Poprilicno apstraktno
+        -->
+<!-- Ovaj se dio tice Gornjeg, lijevod i desnog menija -->
+<!-- GLAVNI MENIJI A -->
+        <record model="ir.actions.act_window" id="rentacar_list_action">
+            <field name="name">RentaCar Desni</field>
+            <field name="res_model">rentacar.klijenti</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Unesi klijenta</p>
+            </field>
+        </record>
+
+          <record  model="ir.ui.view" id="rentacar_klijenti_form">
+              <field name="name">RentaCar klijenti: form</field>
+              <field name="model">rentacar.klijenti</field>
+              <field name="arch" type="xml">
+                  <tree string="Ma sta ja znam">
+                    <field name="name"/>
+                    <field name="address"/>
+                  </tree>
+              </field>    
+          </record>
+
+        <!-- top level menu: no parent  Skroz gornji crni meni-->
+        <menuitem id="main_rentacar_menu" name="RentaCar Gornji"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="rentacar_menu" name="RentaCar Lijevi Meni"
+                  parent="main_rentacar_menu"/>
+        <!-- the following menuitem should appear *after*
+             its parent openacademy_menu and *after* its
+             action course_list_action -->
+        <menuitem id="klijenti_menu" name="Klijenti" parent="rentacar_menu"
+                  action="rentacar_list_action"/>
+<!-- GLAVNI MENIJI B-->
+
+<!-- ODJELJAK AUTOMOBILI MENI  A -->
+        <record  model="ir.ui.view" id="rentacar_automobili_form">
+              <field name="name">RentaCar Automobili: form</field>
+              <field name="model">rentacar.automobili</field>
+              <field name="arch" type="xml">
+                  <tree string="Ma sta ja znam">
+                    <field name="car_brand"/>
+                    <field name="car_model"/>
+                    <field name="car_plates"/>
+                  </tree>
+              </field>    
+            </record>
+
+        <record model="ir.actions.act_window" id="automobili_list_action">
+            <field name="name">Automobili</field>
+            <field name="res_model">rentacar.automobili</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>        
+<!-- Menu item radi display ali potreban je i ovaj gre dio tj. action -->
+        <menuitem id="automobili_menu" name="Automobili" parent="rentacar_menu"          action="automobili_list_action"/>       
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+
+<!-- ODJELJAK AUTOMOBILI MENI B-->
+
+
+
+<!-- ODJELJAK REZERVACIJE MENI  A -->
+ 
+      <!-- Ovah record se tice samo form viewa znaci ono kad kliknes na record -->
+        <record model="ir.ui.view" id="rezervacija_form_view">
+            <field name="name">rezervacija.form</field>
+            <field name="model">rentacar.rezervacija</field>
+            <field name="arch" type="xml">
+                <form string="Rezervacija Form">
+                    <sheet>
+                        <group string="Rezervacija">
+                            <field name="korisnik_id"/>
+                            <field name="automobil_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="cash_pay"/>
+                            <field name="card_pay"/>
+                            <field name="opisi"/>  
+                      </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- OVO JE INAĆE PRVI DIO AKO NEMA FORM VIEW-->
+        <record  model="ir.ui.view" id="rentacar_rezervacija_form">
+              <field name="name">RentaCar Rezervacije: form</field>
+              <field name="model">rentacar.rezervacija</field>
+              <field name="arch" type="xml">
+                  <tree string="Ma sta ja znam">
+                    <field name="korisnik_id"/>
+                    <field name="automobil_id"/>
+                  </tree>
+              </field>    
+        </record>
+        <!-- OVO BUDE UVIJEK DRUGI DIO -->
+        <record model="ir.actions.act_window" id="rezervacija_list_action">
+            <field name="name">Rezervacija</field>
+            <field name="res_model">rentacar.rezervacija</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>  
+        <!-- OVO UVIJEK BUDE TRECI DIO -->
+        <menuitem id="rezervacija_menu" name="Rezervacije" parent="rentacar_menu"  action="rezervacija_list_action"/>
+
+<!-- ODJELJAK REZERVACIJE MENI  B -->
+
+<!-- ODJELJAK CIJENE MENI  A -->
+
+        <record  model="ir.ui.view" id="rentacar_cijene_form">
+              <field name="name">RentaCar Cijene: form</field>
+              <field name="model">rentacar.cijene</field>
+              <field name="arch" type="xml">
+                  <tree string="Ma sta ja znam">
+                   <field name="automobil_id"/>
+                    <field name="car_price"/>
+                  </tree>
+              </field>    
+        </record>
+
+        <record model="ir.actions.act_window" id="cijene_list_action">
+            <field name="name">Cijene</field>
+            <field name="res_model">rentacar.cijene</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>  
+
+        <menuitem id="cijene_menu" name="Cijene" parent="rentacar_menu" action="cijene_list_action"/>
+<!-- ODJELJAK CIJENE MENI  B -->
+    </data>
+</openerp> 
+
+
+
+
+
+
+
+
+
+
+
+
+
